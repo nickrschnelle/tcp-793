@@ -60,6 +60,9 @@ TCP_Header :: struct #packed {
 }
 
 main :: proc() {
+	PORT: u16be = 8080
+	ADDR := [4]u8{127, 0, 0, 1}
+
 	sockflags := bit_set[linux.Socket_FD_Flags_Bits;int]{}
 	sock, err := linux.socket(
 		linux.Address_Family.INET,
@@ -68,10 +71,17 @@ main :: proc() {
 		linux.Protocol.TCP,
 	)
 	if err != linux.Errno.NONE {
-		fmt.println("Some error", err)
+		fmt.println("error creating socket", err)
 		os.exit(1)
 	}
 	defer linux.close(sock)
+
+	//	addr := linux.Sock_Addr_In {
+	//		sin_port   = PORT,
+	//		sin_addr   = ADDR,
+	//		sin_family = linux.Address_Family.INET,
+	//	}
+
 
 	h := TCP_Header {
 		src_port = cast(u16be)8080,

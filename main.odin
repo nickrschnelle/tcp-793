@@ -14,7 +14,7 @@ get_input :: proc() -> (string, os.Error) {
 	input := string(buf[:n])
 	input = strings.trim_suffix(input, "\n")
 	input = strings.trim_suffix(input, "\r")
-	return input, nil
+	return strings.clone(input), nil
 }
 
 main :: proc() {
@@ -23,6 +23,5 @@ main :: proc() {
 	fmt.println("  1)\tStart server")
 	fmt.println("  2)\tStart clent")
 	input, err := get_input()
-
-	fmt.println("input: ", input)
+	defer delete(input)
 }

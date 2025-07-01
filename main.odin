@@ -23,5 +23,12 @@ main :: proc() {
 	fmt.println("  1)\tStart server")
 	fmt.println("  2)\tStart clent")
 	input, err := get_input()
+	// TODO: switch
+	if input == "1" {
+		server_init(8080, 8081)
+	}
+	if input == "2" {
+		client_init(8080, 8081)
+	}
 	defer delete(input)
 }

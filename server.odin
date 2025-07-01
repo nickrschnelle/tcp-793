@@ -4,13 +4,13 @@ import "core:fmt"
 import "core:os"
 import l "core:sys/linux"
 
-server_start :: proc(client_port: u8, server_port: u8) {
+server_init :: proc(client_port: u16, server_port: u16) {
 	CLIENT_PORT := cast(u16be)client_port
 	SERVER_PORT := cast(u16be)server_port
 	ADDR := [4]u8{127, 0, 0, 1}
 
 	sockflags := bit_set[l.Socket_FD_Flags_Bits;int]{}
-	sock, err := l.socket(l.Address_Family.INET, l.Socket_Type.RAW, sockflags, l.Protocol.TCP)
+	sock, err := l.socket(l.Address_Family.INET, l.Socket_Type.RAW, sockflags, l.Protocol(253))
 	if err != l.Errno.NONE {
 		fmt.println("error creating socket", err)
 		os.exit(1)

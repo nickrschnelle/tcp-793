@@ -27,6 +27,7 @@ generate_ip_header :: proc(src_addr: [4]u8, dest_addr: [4]u8, payload_len: u16) 
 		// 0100 0101 (first 4 bits = 4 for version, 2nd 4 bits = 5 for ihl)
 		version_ihl = (4 << 4) | 5,
 		tos = 0,
+		// TODO: when using options, 20 will need to be updated, this is the no options header length
 		total_length = cast(u16be)(20 + payload_len),
 		identification = cast(u16be)1234,
 		flags_fagment_offset = IP_Flags_Fragment_Offset{fragment_offset = 0, flags = 0},
